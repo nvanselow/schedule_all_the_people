@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe Person, type: :model do
   describe "validations" do
     it { should have_valid(:first_name).when("Name", "Another Name") }
@@ -43,14 +45,48 @@ describe Person, type: :model do
     end
   end
 
-  describe "#add_event_availabilities" do
-    it "adds all slots for an event to a person's availability list" do
+  describe "#add_restriction" do
+    it "adds a restriction to a person's schedule" do
+      slot = FactoryGirl.create(:slot)
+      person = FactoryGirl.create(:person)
 
+      person.add_restriction(slot)
+
+      expect(person.slot_restrictions.size).to eq(1)
+    end
+
+    it "only adds the expected slot" do
+      slot = FactoryGirl.create(:slot)
+      another_slot = FactoryGirl.create(:slot)
+      person = FactoryGirl.create(:person)
+
+      person.add_restriction(slot)
+
+      expect(person.slot_restrictions.size).to eq(1)
     end
   end
 
-  describe "#add_availabilities" do
+  describe "#remove_restriction" do
+    it "removes a restriction from a person's schedule" do
+      slot = FactoryGirl.create(:slot)
+      person = FactoryGirl.create(:person)
+      person.slot_restrictions << slot
 
+      person.remove_restriction(slot)
+
+      expect(person.slot_restrictions.size).to eq(0)
+    end
+
+    it "only removes the expected slot" do
+      slot = FactoryGirl.create(:slot)
+      another_slot = FactoryGirl.create(:slot)
+      person = FactoryGirl.create(:person)
+      person.slot_restrictions << [slot, another_slot]
+
+      person.remove_restriction(slot)
+
+      expect(person.slot_restrictions.size).to eq(1)
+    end
   end
 end
 

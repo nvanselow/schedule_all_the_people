@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe Block, type: :model do
   describe "validations" do
     subject {FactoryGirl.build(:block) }

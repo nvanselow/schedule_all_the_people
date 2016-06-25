@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe Event, type: :model do
   describe "validations" do
     it { should have_valid(:name).when("Group Name", "Group") }

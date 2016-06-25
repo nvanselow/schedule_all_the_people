@@ -1,3 +1,5 @@
+require "rails_helper"
+
 feature Group, type: :model do
 
   describe "validations" do

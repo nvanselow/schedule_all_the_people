@@ -1,3 +1,5 @@
+require "rails_helper"
+
 describe Slot, type: :model do
   describe "validations" do
     subject {FactoryGirl.build(:slot) }

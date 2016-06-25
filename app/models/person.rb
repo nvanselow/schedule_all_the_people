@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   has_many :members
   has_many :groups, through: :members
   has_many :person_slot_restrictions
+  has_many :slot_restrictions, through: :person_slot_restrictions, source: :slot
   has_many :scheduled_spots
   has_many :slots, through: :scheduled_spots
 
@@ -21,20 +22,12 @@ class Person < ActiveRecord::Base
     get_all_with_availability_count.order("restrictions_count DESC")
   end
 
-  def add_event_availabilities(event)
-    this.slots << event.slots
+  def add_restriction(slot)
+    slot_restrictions << slot
   end
 
-  def add_availabilities(slots)
-    this.slots << slots
-  end
-
-  def add_availability(slot)
-    this.slots << slot
-  end
-
-  def remove_availability(slot)
-    this.slots.destroy(slot)
+  def remove_restriction(slot)
+    slot_restrictions.destroy(slot)
   end
 
 
