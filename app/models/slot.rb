@@ -2,7 +2,7 @@ class Slot < ActiveRecord::Base
   belongs_to :block
   has_many :scheduled_spots, dependent: :destroy
   has_many :people, through: :scheduled_spots
-  has_many :person_availabilities, dependent: :destroy
+  has_many :person_slot_restrictions, dependent: :destroy
 
   validates :available_spots, presence: true,
     numericality: { only_integer: true, greater_than: 0 }

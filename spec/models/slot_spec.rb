@@ -22,6 +22,6 @@ describe Slot, type: :model do
     it { should belong_to(:block) }
     it { should have_many(:scheduled_spots).dependent(:destroy) }
     it { should have_many(:people).through(:scheduled_spots) }
-    it { should have_many(:person_availabilities).dependent(:destroy) }
+    it { should have_many(:person_slot_restrictions).dependent(:destroy) }
   end
 end

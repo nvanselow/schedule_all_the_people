@@ -3,4 +3,12 @@ class Event < ActiveRecord::Base
   has_many :blocks, dependent: :destroy
 
   validates :name, presence: true
+
+  def slots
+    slots = []
+    blocks.each do |block|
+      slots.concat(block.slots)
+    end
+    slots
+  end
 end

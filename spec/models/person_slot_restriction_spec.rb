@@ -1,4 +1,4 @@
-describe PersonAvailability, type: :model do
+describe PersonSlotRestriction, type: :model do
   describe "validations" do
     it { should validate_presence_of(:person) }
     it { should validate_presence_of(:slot) }

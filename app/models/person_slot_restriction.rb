@@ -1,4 +1,4 @@
-class PersonAvailability < ActiveRecord::Base
+class PersonSlotRestriction < ActiveRecord::Base
   belongs_to :person
   belongs_to :slot
 
