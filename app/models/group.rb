@@ -4,5 +4,5 @@ class Group < ActiveRecord::Base
   has_many :people, through: :members
 
   validates :name, presence: true
-  validates :last_used, timeliness: :on
+  validates :last_used, timeliness: :on, allow_blank: true, allow_nil: true
 end
