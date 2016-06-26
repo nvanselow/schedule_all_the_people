@@ -1,0 +1,16 @@
+<h2>Groups</h2>
+
+<ul>
+  <% @groups.each do |group| %>
+    <li>
+      <%= group.name %>
+      <% if group.people.size > 1 %>
+        (<%= group.people.size %> people)
+      <% elsif group.people.size == 1 %>
+        (1 person)
+      <% else %>
+        (No people in this group)
+      <% end %>
+    </li>
+  <% end %>
+</ul>

@@ -2,8 +2,7 @@ require "rails_helper"
 
 describe Person, type: :model do
   describe "validations" do
-    it { should have_valid(:first_name).when("Name", "Another Name") }
-    it { should_not have_valid(:first_name).when("", nil) }
+    it { should have_valid(:first_name).when("Name", "Another Name", "", nil) }
 
     it { should have_valid(:last_name).when("Name", "Last Name", "", nil) }
 

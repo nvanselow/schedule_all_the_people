@@ -2,13 +2,15 @@ Rails.application.routes.draw do
 
   root "home#index"
 
-  get "/google/auth" => "google#create"
+  # get "/google/auth" => "google#create"
   # get "/signet/callback" => "session#create"
-  get "/auth/:provider/callback" => 'session#create'
+  get "/auth/:provider/callback" => 'sessions#create'
 
-  resources :google, only: [:index, :create]
   resources :home, only: [:index]
-  resources :session, only: [:create, :destroy]
+  resource :sessions, only: [:create, :destroy]
+  resources :google_calendar, only: [:create]
+
+  resources :groups, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

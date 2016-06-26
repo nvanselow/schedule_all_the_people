@@ -1,0 +1,7 @@
+<div class="alerts">
+  <% flash.each do |type, message| %>
+    <div class="callout <%= type %>">
+      <p><%= message %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,20 @@
+<h2><%= @group.name %></h2>
+
+<% if @people.empty? %>
+  <p>
+    There are no people in this group. Add people below.
+  </p>
+
+<% else %>
+  <h3>People:</h3>
+  <ul class="people">
+    <% @people.each do |person| %>
+      <li class="person">
+        <%= person.email %>
+        <% if person.name %>
+          (<%= person.name %>)
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

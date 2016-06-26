@@ -6,7 +6,6 @@ class Person < ActiveRecord::Base
   has_many :scheduled_spots
   has_many :slots, through: :scheduled_spots
 
-  validates :first_name, presence: true
   validates :email,
     presence: true,
     format: {
