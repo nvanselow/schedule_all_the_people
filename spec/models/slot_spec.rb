@@ -2,7 +2,11 @@ require "rails_helper"
 
 describe Slot, type: :model do
   describe "validations" do
-    subject {FactoryGirl.build(:slot) }
+    subject {
+        FactoryGirl.build(:slot,
+          start_time: '2014-10-31 20:00',
+          end_time: '2016-01-23 18:00')
+      }
 
     it { should have_valid(:available_spots).when(1, 2, 20) }
     it { should_not have_valid(:available_spots)

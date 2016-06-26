@@ -22,6 +22,18 @@ class Person < ActiveRecord::Base
     get_all_with_availability_count.order("restrictions_count DESC")
   end
 
+  def name
+    if(first_name && !last_name)
+      first_name
+    elsif(!first_name && last_name)
+      last_name
+    elsif(last_name && first_name)
+      "#{first_name} #{last_name}"
+    else
+      nil
+    end
+  end
+
   def add_restriction(slot)
     slot_restrictions << slot
   end
@@ -29,7 +41,6 @@ class Person < ActiveRecord::Base
   def remove_restriction(slot)
     slot_restrictions.destroy(slot)
   end
-
 
   private
 

@@ -31,6 +31,11 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'capistrano-rails', group: :development
 
 gem 'validates_timeliness', '~> 4.0'
+gem 'signet'
+gem 'google-api-client', '0.9'
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+# gem 'google-api-client', '0.8.6', require: 'google/api_client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -41,6 +46,7 @@ group :development, :test do
   gem "pry-rails"
   gem "shoulda"
   gem "valid_attribute"
+  gem 'dotenv-rails'
 end
 
 group :development do

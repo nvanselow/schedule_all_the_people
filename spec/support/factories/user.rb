@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:uuid) { |num| "uuid-#{num}"}
+    sequence(:uid) { |num| "uuid-#{num}"}
+    provider "some_oauth_provider"
     first_name "Gavin"
     last_name "Guile"
     avatar_url "https://placebear.com/25/25"
