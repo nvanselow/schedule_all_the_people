@@ -12,59 +12,28 @@ class Scheduler
   def run
     validate
 
-    people_for_scheduling = @people.clone
-
     if(@errors.empty?)
-      # This solution isn't great. Use all permutations solution, but not required for MVP
-      # iterate through all the slots, assigning people
-      # @slots.each do |slot|
-      #   scheduled = false
-      #   people_for_scheduling.each do |person|
-      #     if(!person.slot_restrictions.include?(slot))
-      #       slot.people << person
-      #       people_for_scheduling.delete(person)
-      #       scheduled = true
-      #       break
-      #     end
-      #   end
-      #
-      #   if(!scheduled)
-      #     @unscheduled_slots << slot
-      #   end
-      # end
-      #
-      # scheduled_people = Person.find_by_sql(["
-      #   SELECT people.* FROM people
-      #   JOIN scheduled_spots ON scheduled_spots.person_id = people.id
-      #   JOIN slots ON slots.id = scheduled_spots.slot_id
-      #   JOIN blocks ON blocks.id = slots.block_id
-      #   WHERE blocks.event_id = ?
-      # ", @event.id])
-      #
-      # @unscheduled_people = @people - scheduled_people
-
-      @slots.each do |slot|
-        slot.people << people_for_scheduling.pop()
-      end
-
-      if(people_for_scheduling.empty?)
-        return true
-      else
-        @unscheduled_people = people_for_scheduling
-        @errors << "Some people could not be scheduled."
-      end
-
-      if(!@unscheduled_slots.empty?)
-        @errors << "There were some slots that could not be scheduled."
-      end
-
-      false
+      schedule_everyone_without_restrictions
     else
       false
     end
   end
 
   private
+
+  def schedule_everyone_without_restrictions
+    @people_for_scheduling = @people.clone
+
+    assign_people_to_slots
+
+    post_validation
+  end
+
+  def assign_people_to_slots
+    @slots.each do |slot|
+      slot.people << @people_for_scheduling.pop()
+    end
+  end
 
   def validate
     if(@people.empty?)
@@ -79,6 +48,21 @@ class Scheduler
     if(@errors.empty? && total_slots < @people.size)
       @errors << "There are too few slots available. Either reduce the number of people or add more blocks."
     end
+  end
+
+  def post_validation
+    if(@people_for_scheduling.empty?)
+      return true
+    else
+      @unscheduled_people = people_for_scheduling
+      @errors << "Some people could not be scheduled."
+    end
+
+    if(!@unscheduled_slots.empty?)
+      @errors << "There were some slots that could not be scheduled."
+    end
+
+    false
   end
 
   def slots_by_most_restricted
