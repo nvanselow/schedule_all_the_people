@@ -17,7 +17,7 @@
   <%= f.label :slot_duration, "Slot Duration (in min)" %>
   <%= f.number_field :slot_duration, min: 0, step: 5 %>
 
-  <%= f.submit "Create Event" %>
+  <%= f.submit "Create Event", class: "button" %>
 <% end %>
 
 <%= render partial: 'application/errors', object: @errors %>
