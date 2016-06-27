@@ -32,14 +32,14 @@ describe Scheduler, type: :model do
     let(:scheduler) { Scheduler.new(event) }
 
     it "returns true if everyone is scheduled" do
-      add_slots(event)
+      add_blocks(event)
       add_people(event)
 
       expect(scheduler.run).to be(true)
     end
 
     it "schedules each person" do
-      slots = add_slots(event)
+      slots = add_blocks(event)
       people = add_people(event)
 
       expect(scheduler.run).to be(true)
@@ -58,7 +58,7 @@ describe Scheduler, type: :model do
     end
 
     it "has an error if there are no people" do
-      add_slots(event)
+      add_blocks(event)
 
       scheduler.run
 
@@ -77,7 +77,7 @@ describe Scheduler, type: :model do
 
     it "has an error if there are too few slots for the number of people" do
       too_many_people = number_of_slots + 2
-      add_slots(event)
+      add_blocks(event)
       event.group.people << FactoryGirl.create_list(:person, too_many_people)
 
       scheduler.run
@@ -86,7 +86,7 @@ describe Scheduler, type: :model do
     end
 
     xit "returns a schedule with errors if someone cannot be scheduled due to restrictions" do
-      add_slots(event)
+      add_blocks(event)
       event.group.people << FactoryGirl.create_list(:person, number_of_people - 1)
 
       very_busy_person = FactoryGirl.create(:person)
@@ -99,7 +99,7 @@ describe Scheduler, type: :model do
     end
 
     xit "does not schedule people for slots they have identifed as restricted" do
-      slots = add_slots(event)
+      slots = add_blocks(event)
 
       busy_person = FactoryGirl.create(:person)
       slots.each { |slot| busy_person.add_restriction(slot) }
@@ -122,12 +122,18 @@ describe Scheduler, type: :model do
   end
 end
 
-def add_slots(event)
-  blocks = FactoryGirl.create_list(:block, number_of_blocks, event: event)
-  num_slots = number_of_slots / number_of_blocks
+def add_blocks(event)
+  block_duration = (number_of_slots * event.slot_duration) / number_of_blocks
+  start_time = DateTime.new(2016, 01, 01, 15, 0, 0)
+  end_time = start_time + block_duration.minutes
+  blocks = FactoryGirl.create_list(:block, number_of_blocks,
+                                    event: event,
+                                    start_time: start_time,
+                                    end_time: end_time)
+                          
   slots = []
   blocks.each do |block|
-    slots.concat(FactoryGirl.create_list(:slot, num_slots, block: block))
+    slots.concat(Slot.create_slots_for_block(block))
   end
   slots
 end

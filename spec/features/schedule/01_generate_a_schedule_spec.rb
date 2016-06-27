@@ -42,7 +42,11 @@ feature "generate a schedule" do
     visit event_path(event)
     click_button("Generate Schedule")
 
-    
+    expect(page).to have_content("Schedule")
+    expect(page).to have_content(event.name)
+    expect(page).to have_content(block.start_time)
+    members.each do |member|
+      expect(page).to have_content(member.person.email)
+    end
   end
-
 end

@@ -2,7 +2,6 @@ class Scheduler
   attr_reader :unscheduled_slots, :unscheduled_people, :errors
   def initialize(event)
     @event = event
-    @slots = slots_by_most_restricted
     @people = people_by_least_available.to_a
     @unscheduled_slots = []
     @unscheduled_people = []
@@ -10,6 +9,8 @@ class Scheduler
   end
 
   def run
+    create_slots
+
     validate
 
     if(@errors.empty?)
@@ -21,6 +22,14 @@ class Scheduler
 
   private
 
+  def create_slots
+    @event.blocks.each do |block|
+      Slot.create_slots_for_block(block)
+    end
+    
+    @slots = slots_by_most_restricted
+  end
+
   def schedule_everyone_without_restrictions
     @people_for_scheduling = @people.clone
 
@@ -31,7 +40,8 @@ class Scheduler
 
   def assign_people_to_slots
     @slots.each do |slot|
-      slot.people << @people_for_scheduling.pop()
+      person = @people_for_scheduling.pop()
+      slot.people << person if person
     end
   end
 
@@ -66,7 +76,7 @@ class Scheduler
   end
 
   def slots_by_most_restricted
-    @event.slots.sort_by do |slot|
+    Event.find(@event.id).slots.sort_by do |slot|
       -slot.person_slot_restrictions.size
     end
   end

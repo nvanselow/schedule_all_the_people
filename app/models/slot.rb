@@ -18,10 +18,12 @@ class Slot < ActiveRecord::Base
       start_time = block.start_time + (slot_duration * n).minutes
       end_time = block.start_time + (slot_duration * (n + 1)).minutes
 
-      slots << Slot.create(block: block,
-                  available_spots: 1,
-                  start_time: start_time,
-                  end_time: end_time)
+      slots << Slot.find_or_create_by(block: block, start_time: start_time, end_time: end_time) do |slot|
+        slot.block = block
+        slot.available_spots = 1
+        slot.start_time = start_time
+        slot.end_time = end_time
+      end
     end
 
     slots

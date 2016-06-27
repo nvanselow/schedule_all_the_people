@@ -1,0 +1,39 @@
+<h2>Schedule</h2>
+<h1><%= @event.name %></h1>
+
+<% if !@schedule_errors.empty? %>
+  <p>
+    There are a few minor problems with your schedule:
+  </p>
+  <%= render partial: 'application/errors', object: @schedule_errors %>
+<% end %>
+
+<div class="blocks">
+  <% @blocks.each do |block| %>
+    <div class="block">
+      <h4>Date: <%= block.start_time %></h4>
+      <table>
+        <tr>
+          <th>Time</th>
+          <th>People</th>
+        </tr>
+        <% block.slots.each do |slot| %>
+          <tr>
+            <td><%= slot.start_time %></td>
+            <td>
+              <% slot.people.each do |person| %>
+                <%= person.email %><br/>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<h2>Send Invites</h2>
+<p>
+  Does this schedule look good? If so, click the button below to send the invites. This cannot be undone. Please only click the button if you are sure you are ready to send invites.
+</p>
+<%= button_to "Send Schedule Invites", event_google_calendars_path(@event), method: 'POST', class: 'button alert', id: 'send-invites-button' %>

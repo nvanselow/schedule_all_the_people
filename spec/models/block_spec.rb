@@ -2,7 +2,9 @@ require "rails_helper"
 
 describe Block, type: :model do
   describe "validations" do
-    subject {FactoryGirl.build(:block) }
+    start_time = '2014-10-31 20:00'
+    end_time = '2016-01-23 18:00'
+    subject { FactoryGirl.build(:block, start_time: start_time, end_time: end_time) }
 
     it { should validate_presence_of(:start_time) }
     it { should have_valid(:start_time).when(*valid_start_dates) }
