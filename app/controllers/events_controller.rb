@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  include SlotsLeft
+  helper_method :slots_left_to_create
 
   def show
     @event = Event.find(params[:id])

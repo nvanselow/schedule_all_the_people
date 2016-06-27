@@ -5,10 +5,10 @@
   Each available slot within each block will be <%= @event.slot_duration %> min long
 </p>
 <h5>You need <%= @group.members.size %> slots.</h5>
-<% if @slots_left_to_create == 0 %>
+<% if slots_left_to_create == 0 %>
   You have created enough slots! You are ready to generate a schedule.
 <% else %>
-  You still need to create <%= @slots_left_to_create %> slots. Add blocks of time below
+  You still need to create <%= slots_left_to_create %> slots. Add blocks of time below
   to increase the number of slots available.
 <% end %>
 
@@ -28,3 +28,21 @@
 <% end %>
 
 <%= render partial: 'blocks/form' %>
+
+<h3>Generate Schedule</h3>
+<% if slots_left_to_create > 0 %>
+  <p>
+    You have not created enough available blocks. Add more blocks to generate a schedule.
+  </p>
+<% else %>
+  <p>
+    You have enough blocks open to generate a schedule for this group.
+  </p>
+<% end %>
+<%= form_tag event_schedules_path(@event) do %>
+  <%= label_tag "Schedule Generation Options" %>
+  <%= radio_button_tag :randomization_option, 'random', true %>
+  <%= radio_button_tag :randomization_option, 'order', false %>
+
+  <%= submit_tag "Generate Schedule", class: 'button' %>
+<% end %>

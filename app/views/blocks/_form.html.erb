@@ -9,10 +9,10 @@
 
 <%= form_for [@event, @block] do |f| %>
   <%= f.label :start_time, "Start Time" %>
-  <%= f.datetime_field :start_time %>
+  <%= f.datetime_field :start_time, step: @event.slot_duration %>
 
   <%= f.label :end_time, "End Time" %>
-  <%= f.datetime_field :end_time %>
+  <%= f.datetime_field :end_time, step: @event.slot_duration %>
 
   <%= f.submit "Add Block" %>
 <% end %>

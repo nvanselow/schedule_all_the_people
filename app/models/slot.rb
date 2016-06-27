@@ -9,4 +9,21 @@ class Slot < ActiveRecord::Base
 
   validates :start_time, presence: true, timeliness: { before: :end_time }
   validates :end_time, presence: true, timeliness: { after: :start_time }
+
+  def self.create_slots_for_block(block)
+    slot_duration = block.event.slot_duration
+    slots = []
+
+    block.number_of_slots.times do |n|
+      start_time = block.start_time + (slot_duration * n).minutes
+      end_time = block.start_time + (slot_duration * (n + 1)).minutes
+
+      slots << Slot.create(block: block,
+                  available_spots: 1,
+                  start_time: start_time,
+                  end_time: end_time)
+    end
+
+    slots
+  end
 end
