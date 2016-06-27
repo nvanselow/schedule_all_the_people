@@ -44,6 +44,52 @@ describe Person, type: :model do
     end
   end
 
+  describe ".create_from_list" do
+    let(:test_email) { "test@email.com" }
+
+    it "creates people from a list of emails" do
+      email_list = "#{test_email}; anotheremail@hotmail.com; third@gmail.com"
+
+      bad_emails = Person.create_from_list(email_list)
+
+      expect(bad_emails.empty?).to be(true)
+      expect(Person.all.count).to eq(3)
+    end
+
+    it "returns nil if there are too many emails" do
+      email_list = "#{test_email}"
+      100.times do
+        email_list << ";#{test_email}"
+      end
+
+      bad_emails = Person.create_from_list(email_list)
+      expect(bad_emails).to be(nil)
+    end
+
+    it "returns an array of bad emails if there are invalid emails" do
+      bad_email = "bad_email"
+      bad_email_2 = "another bad one"
+      email_list = "#{bad_email}, #{test_email}, #{bad_email_2}"
+
+      bad_emails = Person.create_from_list(email_list)
+
+      expect(bad_emails.size).to eq(2)
+      expect(bad_emails[0].email).to eq(bad_email)
+      expect(bad_emails[1].email).to eq(bad_email_2)
+      expect(Person.all.count).to eq(1)
+    end
+
+    it "adds people to a group if a group is specified" do
+      group = FactoryGirl.create(:group)
+      email_list = "#{test_email}; anotheremail@hotmail.com; third@gmail.com"
+
+      bad_emails = Person.create_from_list(email_list, group)
+
+      expect(group.people.count).to eq(3)
+      expect(group.people[0].email).to eq(test_email)
+    end
+  end
+
   describe "#add_restriction" do
     it "adds a restriction to a person's schedule" do
       slot = FactoryGirl.create(:slot)

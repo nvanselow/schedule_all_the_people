@@ -13,7 +13,7 @@ feature "view details for a group" do
   scenario "there are no people in the group" do
     visit group_path(group.id)
 
-    within(".content") do
+    within(".people") do
       expect(page).to have_content("There are no people in this group")
       expect(page).not_to have_content("People")
     end
@@ -24,7 +24,7 @@ feature "view details for a group" do
 
     visit group_path(group.id)
 
-    within(".content") do
+    within(".people") do
       expect(page).to have_content("People")
       group.people.each do |person|
         expect(page).to have_content(person.email)

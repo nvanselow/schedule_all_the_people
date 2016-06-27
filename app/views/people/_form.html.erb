@@ -1,0 +1,32 @@
+<div class="add-person">
+  <h4>Add a Person:</h4>
+  <%= render partial: 'application/errors', object: @errors %>
+  <%= form_for [@group, @person]  do |f| %>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+
+    <%= f.label :first_name, "First Name (optional)" %>
+    <%= f.text_field :first_name %>
+
+    <%= f.label :last_name, "Last Name (optional)" %>
+    <%= f.text_field :last_name %>
+
+    <%= f.submit "Add Person", class: "button" %>
+  <% end %>
+
+  <h4>Add a Group of People</h4>
+  <p>
+    If you have a list of emails (each separated by a comma or semicolon), you can
+    paste them below and add the whole list to the group.
+  </p>
+  <% if @email_list_errors %>
+    <h5>The following emails could not be added:</h5>
+    <%= render partial: 'application/errors', object: @email_list_errors %>
+  <% end %>
+  <%= form_tag group_people_path(@group) do %>
+    <%= label_tag :email_list, "List of Emails" %>
+    <%= text_area_tag :email_list %>
+
+    <%= submit_tag "Add All Emails", class: "button" %>
+  <% end %>
+</div>

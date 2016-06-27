@@ -1,0 +1,23 @@
+<h2>Create a New Event</h2>
+
+<%= form_for @event do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <% if @groups.empty? %>
+    <p>
+      Please create a group first. Visit the
+      <%= link_to "Create Group Page", new_group_path %> and then try again.
+    </p>
+  <% else %>
+    <%= f.label :group_id, "Select a Group" %>
+    <%= f.select :group_id, @groups %>
+  <% end %>
+
+  <%= f.label :slot_duration, "Slot Duration (in min)" %>
+  <%= f.number_field :slot_duration, min: 0, step: 5 %>
+
+  <%= f.submit "Create Event" %>
+<% end %>
+
+<%= render partial: 'application/errors', object: @errors %>

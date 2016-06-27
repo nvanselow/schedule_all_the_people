@@ -1,20 +1,32 @@
 <h2><%= @group.name %></h2>
 
-<% if @people.empty? %>
-  <p>
-    There are no people in this group. Add people below.
-  </p>
+<%= render partial: 'people/form' %>
 
-<% else %>
-  <h3>People:</h3>
-  <ul class="people">
-    <% @people.each do |person| %>
-      <li class="person">
-        <%= person.email %>
-        <% if person.name %>
-          (<%= person.name %>)
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+<div class="people">
+  <% if @people.empty? %>
+    <p>
+      There are no people in this group. Add people above.
+    </p>
+  <% else %>
+    <h3>People:</h3>
+    <p>
+      Note: Due to Google Calendar limits, you may only add up to 90 people
+      to a group.
+    </p>
+    <ul class="people-list">
+      <% @people.each do |person| %>
+        <li class="person">
+          <%= person.email %>
+          <% if person.name %>
+            (<%= person.name %>)
+          <% end %>
+          <%= link_to "Remove", group_person_path(@group, person),
+              method: 'DELETE',
+              class:"delete-person button alert",
+              id: "delete_#{person.id}"
+          %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

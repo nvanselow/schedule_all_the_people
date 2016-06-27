@@ -1,0 +1,30 @@
+<h2><%= @event.name %></h2>
+<h4>Uses Group: <%= @group.name %></h4>
+<h4>Slot Duration: <%= @event.slot_duration %> min</h4>
+<p>
+  Each available slot within each block will be <%= @event.slot_duration %> min long
+</p>
+<h5>You need <%= @group.members.size %> slots.</h5>
+<% if @slots_left_to_create == 0 %>
+  You have created enough slots! You are ready to generate a schedule.
+<% else %>
+  You still need to create <%= @slots_left_to_create %> slots. Add blocks of time below
+  to increase the number of slots available.
+<% end %>
+
+<% if @blocks.empty? %>
+  <p>
+    There are no blocks of time. Please add some below.
+  </p>
+<% else %>
+  <h3>Blocks of Time Available:</h3>
+  <ul>
+    <% @blocks.each do |block| %>
+      <li class="block">
+        <%= block.start_time %> to <%= block.end_time %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= render partial: 'blocks/form' %>

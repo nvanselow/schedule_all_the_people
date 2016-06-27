@@ -1,3 +1,5 @@
+require_relative '../../lib/modules/email_list'
+
 class Person < ActiveRecord::Base
   has_many :members
   has_many :groups, through: :members
@@ -19,6 +21,25 @@ class Person < ActiveRecord::Base
 
   def self.all_by_unavailability
     get_all_with_availability_count.order("restrictions_count DESC")
+  end
+
+  def self.create_from_list(email_list, group = nil)
+    emails = EmailList.parse(email_list)
+
+    if(emails.size > 90)
+      nil
+    else
+      bad_emails = []
+      emails.each do |email|
+        person = Person.new(email: email)
+        if(!person.save)
+          bad_emails << person
+        else
+          group.people << person if group
+        end
+      end
+      bad_emails
+    end
   end
 
   def name

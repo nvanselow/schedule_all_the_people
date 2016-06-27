@@ -7,6 +7,10 @@ describe Event, type: :model do
 
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:group) }
+
+    it { should have_valid(:slot_duration).when(1, 2, 20) }
+    it { should_not have_valid(:slot_duration)
+      .when("", nil, "not a number", 0.5, 0) }
   end
 
   describe "associations" do

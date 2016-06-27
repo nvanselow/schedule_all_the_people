@@ -10,7 +10,12 @@ Rails.application.routes.draw do
   resource :sessions, only: [:create, :destroy]
   resources :google_calendar, only: [:create]
 
-  resources :groups, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  resources :groups, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    resources :people, only: [:create, :destroy]
+  end
+  resources :events, only: [:show, :new, :create] do
+    resources :blocks, only: [:create]
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

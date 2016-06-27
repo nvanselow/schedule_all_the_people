@@ -8,6 +8,9 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   validates :user, presence: true
   validates :group, presence: true
+  validates :slot_duration,
+            presence: true,
+            numericality: { only_integer: true, greater_than: 0 }
 
   def slots
     slots = []
