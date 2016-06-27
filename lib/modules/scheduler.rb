@@ -24,9 +24,9 @@ class Scheduler
 
   def create_slots
     @event.blocks.each do |block|
-      Slot.create_slots_for_block(block)
+      Slot.create_slots_for_block_and_clean(block)
     end
-    
+
     @slots = slots_by_most_restricted
   end
 

@@ -20,10 +20,12 @@
   <h3>Blocks of Time Available:</h3>
   <ul>
     <% @blocks.each do |block| %>
-      <li class="block">
-        <%= block.start_time.in_time_zone(block.time_zone) %>
-        to <%= block.end_time.in_time_zone(block.time_zone) %>
-      </li>
+      <% if block.valid? %>
+        <li class="block">
+          <%= block.start_time.in_time_zone(block.time_zone) %>
+          to <%= block.end_time.in_time_zone(block.time_zone) %>
+        </li>
+      <% end %>
     <% end %>
   </ul>
 <% end %>

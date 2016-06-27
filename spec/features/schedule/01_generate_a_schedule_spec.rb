@@ -49,4 +49,24 @@ feature "generate a schedule" do
       expect(page).to have_content(member.person.email)
     end
   end
+
+  scenario "schedule is not doubled when regenerated" do
+    num_people = 5
+    num_slots = 5
+    end_time = start_time + (event.slot_duration * num_slots).minutes
+    members = FactoryGirl.create_list(:member, num_people, group: group)
+    block = FactoryGirl.create(:block, event: event, start_time: start_time, end_time: end_time)
+
+    visit event_path(event)
+    click_button("Generate Schedule")
+    visit event_path(event)
+    click_button("Generate Schedule")
+
+    expect(page).to have_content("Schedule")
+    expect(page).to have_content(event.name)
+    expect(page).to have_content(block.start_time)
+    members.each do |member|
+      expect(page).to have_content(member.person.email, count: 1)
+    end
+  end
 end

@@ -10,6 +10,14 @@ feature "create an event" do
     sign_in_as(user)
   end
 
+  scenario "go to form from nav bar" do
+    visit root_path
+
+    click_link("Create an Event")
+
+    expect(page).to have_content("Create a New Event")
+  end
+
   scenario "user correctly fills out the form to create a group" do
     visit new_event_path
 

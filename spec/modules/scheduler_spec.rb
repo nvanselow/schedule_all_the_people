@@ -130,10 +130,10 @@ def add_blocks(event)
                                     event: event,
                                     start_time: start_time,
                                     end_time: end_time)
-                          
+
   slots = []
   blocks.each do |block|
-    slots.concat(Slot.create_slots_for_block(block))
+    slots.concat(Slot.create_slots_for_block_and_clean(block))
   end
   slots
 end

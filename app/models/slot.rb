@@ -10,7 +10,7 @@ class Slot < ActiveRecord::Base
   validates :start_time, presence: true, timeliness: { before: :end_time }
   validates :end_time, presence: true, timeliness: { after: :start_time }
 
-  def self.create_slots_for_block(block)
+  def self.create_slots_for_block_and_clean(block)
     slot_duration = block.event.slot_duration
     slots = []
 
@@ -25,6 +25,10 @@ class Slot < ActiveRecord::Base
         slot.end_time = end_time
         slot.time_zone = block.time_zone
       end
+    end
+
+    slots.each do |slot|
+      slot.scheduled_spots.destroy_all
     end
 
     slots

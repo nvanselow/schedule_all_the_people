@@ -31,7 +31,7 @@ describe Slot, type: :model do
     it { should have_many(:person_slot_restrictions).dependent(:destroy) }
   end
 
-  describe ".create_slots_for_block" do
+  describe ".create_slots_for_block_and_clean" do
     let(:slot_duration) { 15 }
     let!(:event) { FactoryGirl.create(:event, slot_duration: 15) }
 
@@ -42,7 +42,7 @@ describe Slot, type: :model do
 
       block = FactoryGirl.create(:block, start_time: start_time, end_time: end_time)
 
-      slots = Slot.create_slots_for_block(block)
+      slots = Slot.create_slots_for_block_and_clean(block)
 
       expect(slots.size).to eq(expected_slots)
       expect(Slot.all.count).to eq(expected_slots)
@@ -59,12 +59,29 @@ describe Slot, type: :model do
 
       block = FactoryGirl.create(:block, start_time: start_time, end_time: end_time)
 
-      slots = Slot.create_slots_for_block(block)
+      slots = Slot.create_slots_for_block_and_clean(block)
 
       expect(slots.size).to eq(expected_slots)
       expect(Slot.all.count).to eq(expected_slots)
       expect(slots[0].start_time).to eq('2016-01-01 11:00')
       expect(slots[3].end_time).to eq('2016-01-01 12:00')
+    end
+
+    it "removes previously scheduled people to prevent doubling on schedule regeneration" do
+      start_time = '2016-01-01 11:00'
+      end_time = '2016-01-01 12:05'
+      expected_slots = 4
+
+      block = FactoryGirl.create(:block, start_time: start_time, end_time: end_time)
+      slot = FactoryGirl.create(:slot, block: block, start_time: start_time, end_time: DateTime.parse(start_time) + 15.minutes)
+      person = FactoryGirl.create(:person)
+      slot.people << person
+
+      slots = Slot.create_slots_for_block_and_clean(block)
+
+      expect(slots.size).to eq(expected_slots)
+      expect(Slot.all.count).to eq(expected_slots)
+      expect(slot.scheduled_spots.count).to eq(0)
     end
    end
 end
