@@ -1,9 +1,33 @@
 <% if current_user %>
+  <h2>Events</h2>
+  <% if @events.empty? %>
     <p>
-      You are currently signed in as <%= current_user.email %>
+      No events have been created.
     </p>
-<% end %>
+    <%= button_to "Create an Event", new_event_path %>
+  <% end %>
+  <ul>
+    <% @events.each do |event| %>
+      <li><%= link_to event.name, event_path(event) %></li>
+    <% end %>
+  </ul>
 
-<ul>
-  <li><%= link_to "Sign in with Google", '/auth/google_oauth2' %></li>
-</ul>
+  <h2>Groups</h2>
+  <% if @groups.empty? %>
+    <p>
+      No groups have been created.
+    </p>
+    <%= button_to "Create a Group", new_group_path %>
+  <% end %>
+  <ul>
+    <% @groups.each do |group| %>
+      <li><%= link_to group.name, group_path(group) %></li>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>
+    Please sign in using your Google account to start using this app.
+  </p>
+  <%= button_to "Sign In", '/auth/google_oauth2', class: "button" %>
+<% end %>
