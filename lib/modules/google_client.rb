@@ -1,8 +1,8 @@
 require 'signet/oauth_2/client'
 
 module GoogleClient
-  def initialize
-    super
+  def initialize(user = nil)
+    return nil if !user
     @client = Signet::OAuth2::Client.new(
       :authorization_uri => 'https://accounts.google.com/o/oauth2/auth',
       :token_credential_uri =>  'https://accounts.google.com/o/oauth2/token',

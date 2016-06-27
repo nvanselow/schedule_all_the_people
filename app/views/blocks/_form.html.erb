@@ -14,5 +14,7 @@
   <%= f.label :end_time, "End Time" %>
   <%= f.datetime_field :end_time, step: @event.slot_duration %>
 
-  <%= f.submit "Add Block" %>
+  <%= time_zone_select(:block, :time_zone, ActiveSupport::TimeZone.us_zones, default: 'Eastern Time (US & Canada)') %>
+
+  <%= f.submit "Add Block", class: "button" %>
 <% end %>

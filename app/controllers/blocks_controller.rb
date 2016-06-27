@@ -21,6 +21,14 @@ class BlocksController < ApplicationController
   private
 
   def block_params
+    time_zone = params[:block][:time_zone]
+
+    params[:block][:start_time] = set_timezone(params[:block][:start_time], time_zone)
+    params[:block][:end_time] = set_timezone(params[:block][:end_time], time_zone)
     params.require(:block).permit(:start_time, :end_time)
+  end
+
+  def set_timezone(time, time_zone)
+    ActiveSupport::TimeZone[time_zone].parse(time)
   end
 end

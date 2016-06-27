@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626213436) do
+ActiveRecord::Schema.define(version: 20160627192852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "blocks", force: :cascade do |t|
-    t.integer  "event_id",   null: false
-    t.datetime "start_time", null: false
-    t.datetime "end_time",   null: false
+    t.integer  "event_id",                                          null: false
+    t.datetime "start_time",                                        null: false
+    t.datetime "end_time",                                          null: false
+    t.string   "time_zone",  default: "Eastern Time (US & Canada)", null: false
   end
 
   create_table "events", force: :cascade do |t|
@@ -67,9 +68,10 @@ ActiveRecord::Schema.define(version: 20160626213436) do
 
   create_table "slots", force: :cascade do |t|
     t.integer  "block_id"
-    t.integer  "available_spots", null: false
-    t.datetime "start_time",      null: false
-    t.datetime "end_time",        null: false
+    t.integer  "available_spots",                                        null: false
+    t.datetime "start_time",                                             null: false
+    t.datetime "end_time",                                               null: false
+    t.string   "time_zone",       default: "Eastern Time (US & Canada)", null: false
   end
 
   create_table "tokens", force: :cascade do |t|

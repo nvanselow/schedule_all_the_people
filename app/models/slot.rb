@@ -23,6 +23,7 @@ class Slot < ActiveRecord::Base
         slot.available_spots = 1
         slot.start_time = start_time
         slot.end_time = end_time
+        slot.time_zone = block.time_zone
       end
     end
 

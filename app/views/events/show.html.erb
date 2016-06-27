@@ -21,7 +21,8 @@
   <ul>
     <% @blocks.each do |block| %>
       <li class="block">
-        <%= block.start_time %> to <%= block.end_time %>
+        <%= block.start_time.in_time_zone(block.time_zone) %>
+        to <%= block.end_time.in_time_zone(block.time_zone) %>
       </li>
     <% end %>
   </ul>

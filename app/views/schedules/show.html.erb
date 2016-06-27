@@ -1,7 +1,7 @@
 <h2>Schedule</h2>
 <h1><%= @event.name %></h1>
 
-<% if !@schedule_errors.empty? %>
+<% if @schedule_errors && !@schedule_errors.empty? %>
   <p>
     There are a few minor problems with your schedule:
   </p>

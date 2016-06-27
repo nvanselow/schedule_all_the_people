@@ -3,6 +3,8 @@ require_relative '../../lib/modules/google_calendar'
 class GoogleCalendarsController < ApplicationController
   def create
     @event = Event.find(params[:event_id])
+    @blocks = @event.blocks
+
     calendar_service = GoogleCalendar.new(current_user)
     calendar_service.create_all_for(@event)
 
