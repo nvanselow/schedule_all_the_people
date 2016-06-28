@@ -5,6 +5,7 @@ class GoogleCalendar
   include GoogleClient
 
   PROVIDER = 'google_oauth2'
+  SimpleCalendar = Struct.new(:id, :name, :time_zone)
 
   def initialize(user)
     @user = user
@@ -15,21 +16,40 @@ class GoogleCalendar
     set_authorization
   end
 
+  def get_calendars
+    # CalendarList.items (array of CalendarListEntry)
+      # CalendarListEntry
+        # id
+        # summary
+        # time_zone
+    calendars = @calendar.list_calendar_lists(min_access_role: "writer")
+    simple_calendars = []
+    calendars.items.each do |calendar|
+      simple_calendars << SimpleCalendar.new(calendar.id,
+                                             calendar.summary,
+                                             calendar.time_zone)
+    end
+    simple_calendars
+  end
+
   def create_all_for(event)
     created_events = []
     event.slots.each do |slot|
       if(slot.people.size > 0)
-        created_events << create_event(event, slot)
+        created_events << create_event(event, slot, event.calendar_id)
       end
     end
     created_events
   end
 
-  def create_event(event, slot)
+  def create_event(event, slot, calendar_id = nil)
+    if(!calendar_id || calendar_id == "")
+      calendar_id = 'primary'
+    end
     @event = event
     @slot = slot
 
-    @calendar.insert_event('primary', google_event, send_notifications: true)
+    @calendar.insert_event(calendar_id, google_event, send_notifications: true)
   end
 
   private

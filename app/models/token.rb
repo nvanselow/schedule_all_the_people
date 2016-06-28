@@ -48,8 +48,9 @@ class Token < ActiveRecord::Base
     # )
 
     # For some reason, I can't get a refresh token so need to sign in again
-    redirect_to '/auth/google_oauth2'
-    nil
+    # redirect_to '/auth/google_oauth2'
+    # nil
+    raise Google::Apis::AuthorizationError.new("Access Token Expired")
   end
 
   def expired?

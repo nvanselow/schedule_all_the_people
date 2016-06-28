@@ -1,29 +1,34 @@
 <% if current_user %>
-  <h2>Events</h2>
-  <% if @events.empty? %>
-    <p>
-      No events have been created.
-    </p>
-    <%= button_to "Create an Event", new_event_path %>
-  <% end %>
-  <ul>
-    <% @events.each do |event| %>
-      <li><%= link_to event.name, event_path(event) %></li>
-    <% end %>
-  </ul>
-
-  <h2>Groups</h2>
-  <% if @groups.empty? %>
-    <p>
-      No groups have been created.
-    </p>
-    <%= button_to "Create a Group", new_group_path %>
-  <% end %>
-  <ul>
-    <% @groups.each do |group| %>
-      <li><%= link_to group.name, group_path(group) %></li>
-    <% end %>
-  </ul>
+  <div class="row events-and-groups">
+    <div class="columns small-12 medium-6">
+      <h2>Events</h2>
+      <% if @events.empty? %>
+        <p>
+          No events have been created.
+        </p>
+        <%= button_to "Create an Event", new_event_path %>
+      <% end %>
+      <ul>
+        <% @events.each do |event| %>
+          <li><%= link_to event.name, event_path(event) %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="columns small-12 medium-6">
+      <h2>Groups</h2>
+      <% if @groups.empty? %>
+        <p>
+          No groups have been created.
+        </p>
+        <%= button_to "Create a Group", new_group_path %>
+      <% end %>
+      <ul>
+        <% @groups.each do |group| %>
+          <li><%= link_to group.name, group_path(group) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
 
 <% else %>
   <p>

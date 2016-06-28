@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :schedules, only: [:create]
     resources :google_calendars, only: [:create]
   end
+
+  resources :google_calendars, only: [:index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
