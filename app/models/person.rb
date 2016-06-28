@@ -43,11 +43,11 @@ class Person < ActiveRecord::Base
   end
 
   def name
-    if(first_name && !last_name)
+    if((first_name && first_name.length > 0) && (!last_name || last_name.length == 0))
       first_name
-    elsif(!first_name && last_name)
+    elsif((!first_name || first_name.length == 0) && (last_name && last_name.length > 0))
       last_name
-    elsif(last_name && first_name)
+    elsif((last_name && last_name.length > 0) && (first_name && first_name.length > 0))
       "#{first_name} #{last_name}"
     else
       nil

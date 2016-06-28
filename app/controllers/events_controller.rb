@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @group = @event.group
-    @blocks = @event.blocks
+    @blocks = blocks
     @block = Block.new
   end
 
@@ -38,4 +38,9 @@ class EventsController < ApplicationController
   def get_groups
     Group.all.collect { |group| [group.name, group.id] }
   end
+
+  def blocks
+    @event.blocks.order(start_time: :asc)
+  end
+
 end

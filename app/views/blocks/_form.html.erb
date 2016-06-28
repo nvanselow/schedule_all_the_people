@@ -1,20 +1,24 @@
-<h3>Add a Block of Time</h3>
-<p>
-  Set up open blocks of time you have for meetings. These larger blocks will
-  automatically be broken up into individual slots of time that can be filled
-  with meetings for the people in the group you specified.
-</p>
+<div class="row">
+  <div class="columns small-12 medium-8 medium-centered">
+    <h3>Add a Block of Time</h3>
+    <p>
+      Set up open blocks of time you have for meetings. These larger blocks will
+      automatically be broken up into individual slots of time that can be filled
+      with meetings for the people in the group you specified.
+    </p>
 
-<%= render partial: 'application/errors', object: @errors %>
+    <%= render partial: 'application/errors', object: @errors %>
 
-<%= form_for [@event, @block] do |f| %>
-  <%= f.label :start_time, "Start Time" %>
-  <%= f.datetime_field :start_time, step: @event.slot_duration %>
+    <%= form_for [@event, @block] do |f| %>
+      <%= f.label :start_time, "Start Time" %>
+      <%= f.datetime_field :start_time, step: @event.slot_duration %>
 
-  <%= f.label :end_time, "End Time" %>
-  <%= f.datetime_field :end_time, step: @event.slot_duration %>
+      <%= f.label :end_time, "End Time" %>
+      <%= f.datetime_field :end_time, step: @event.slot_duration %>
 
-  <%= time_zone_select(:block, :time_zone, ActiveSupport::TimeZone.us_zones, default: 'Eastern Time (US & Canada)') %>
+      <%= time_zone_select(:block, :time_zone, ActiveSupport::TimeZone.us_zones, default: 'Eastern Time (US & Canada)') %>
 
-  <%= f.submit "Add Block", class: "button" %>
-<% end %>
+      <%= f.submit "Add Block", class: "button" %>
+    <% end %>
+  </div>
+</div>

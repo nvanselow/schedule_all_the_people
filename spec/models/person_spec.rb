@@ -90,6 +90,50 @@ describe Person, type: :model do
     end
   end
 
+  describe "#name" do
+    it "combines the first and last name if both specified" do
+      person = FactoryGirl.create(:person)
+
+      expect(person.name).to eq("#{person.first_name} #{person.last_name}")
+    end
+
+    it "only provides first name if last name is nil" do
+      person = FactoryGirl.create(:person, last_name: nil)
+
+      expect(person.name).to eq(person.first_name)
+    end
+
+    it "only provides first name if last name is blank" do
+      person = FactoryGirl.create(:person, last_name: "")
+
+      expect(person.name).to eq(person.first_name)
+    end
+
+    it "only provides the last name if the first name is nil" do
+      person = FactoryGirl.create(:person, first_name: nil)
+
+      expect(person.name).to eq(person.last_name)
+    end
+
+    it "only provides the last name if the first name is blank" do
+      person = FactoryGirl.create(:person, first_name: "")
+
+      expect(person.name).to eq(person.last_name)
+    end
+
+    it "returns nil if there is no first or last name" do
+      person = FactoryGirl.create(:person, first_name: nil, last_name: nil)
+
+      expect(person.name).to eq(nil)
+    end
+
+    it "returns nil if both first and last name are blank" do
+      person = FactoryGirl.create(:person, first_name: "", last_name: "")
+
+      expect(person.name).to eq(nil)
+    end
+  end
+
   describe "#add_restriction" do
     it "adds a restriction to a person's schedule" do
       slot = FactoryGirl.create(:slot)

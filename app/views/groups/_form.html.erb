@@ -2,7 +2,7 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 
-  <%= f.submit button_text %>
+  <%= f.submit button_text, class: "button" %>
 <% end %>
 
 <%= render partial: 'errors', object: @errors %>

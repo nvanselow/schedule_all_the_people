@@ -1,7 +1,5 @@
 <h2><%= @group.name %></h2>
 
-<%= render partial: 'people/form' %>
-
 <div class="people">
   <% if @people.empty? %>
     <p>
@@ -10,19 +8,21 @@
   <% else %>
     <h3>People:</h3>
     <p>
-      Note: Due to Google Calendar limits, you may only add up to 90 people
+      <i>Note:</i> Due to Google Calendar limits, you may only add up to 90 people
       to a group.
     </p>
     <ul class="people-list">
       <% @people.each do |person| %>
         <li class="person">
-          <%= person.email %>
-          <% if person.name %>
-            (<%= person.name %>)
-          <% end %>
+          <p class="person-info">
+            <%= person.email %>
+            <% if person.name %>
+              (<%= person.name %>)
+            <% end %>
+          </p>
           <%= link_to "Remove", group_person_path(@group, person),
               method: 'DELETE',
-              class:"delete-person button alert",
+              class:"delete-person button alert small",
               id: "delete_#{person.id}"
           %>
         </li>
@@ -30,3 +30,5 @@
     </ul>
   <% end %>
 </div>
+
+<%= render partial: 'people/form' %>

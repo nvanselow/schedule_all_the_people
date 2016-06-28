@@ -18,6 +18,7 @@ feature "generate a schedule" do
     visit event_path(event)
 
     expect(page).to have_content("You have not created enough available blocks. Add more blocks to generate a schedule.")
+    expect(page).to have_button("Generate Schedule", disabled: true)
   end
 
   scenario "enough blocks have been added to generate a schedule" do
@@ -30,6 +31,7 @@ feature "generate a schedule" do
     visit event_path(event)
 
     expect(page).to have_content("You have enough blocks open to generate a schedule for this group.")
+    expect(page).to have_button("Generate Schedule", disabled: false)
   end
 
   scenario "user generates a schedule" do

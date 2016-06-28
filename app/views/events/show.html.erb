@@ -1,52 +1,69 @@
 <h2><%= @event.name %></h2>
-<h4>Uses Group: <%= @group.name %></h4>
+<h4>Group: <%= @group.name %></h4>
 <h4>Slot Duration: <%= @event.slot_duration %> min</h4>
 <p>
   Each available slot within each block will be <%= @event.slot_duration %> min long
 </p>
-<h5>You need <%= @group.members.size %> slots.</h5>
-<% if slots_left_to_create == 0 %>
-  You have created enough slots! You are ready to generate a schedule.
-<% else %>
-  You still need to create <%= slots_left_to_create %> slots. Add blocks of time below
-  to increase the number of slots available.
-<% end %>
-
+<div class="callout<%= slots_left_to_create > 0 ? " alert" : " success" %>">
+  <h5>You need <%= @group.members.size %> slot<%= @group.members.size > 1 ? "s" : ""%>.</h5>
+  <% if slots_left_to_create == 0 %>
+    You have created enough slots! You are ready to generate a schedule.
+  <% else %>
+    You still need to create <%= slots_left_to_create %> slots. Add blocks of time below
+    to increase the number of slots available.
+  <% end %>
+</div>
 <% if @blocks.empty? %>
   <p>
     There are no blocks of time. Please add some below.
   </p>
 <% else %>
   <h3>Blocks of Time Available:</h3>
-  <ul>
-    <% @blocks.each do |block| %>
-      <% if block.valid? %>
-        <li class="block">
-          <%= block.start_time.in_time_zone(block.time_zone) %>
-          to <%= block.end_time.in_time_zone(block.time_zone) %>
-        </li>
-      <% end %>
+  <div class="row">
+  <% @blocks.each do |block| %>
+    <% if block.valid? %>
+      <div class="block columns small-6 medium-2 text-center callout secondary<%= block == @blocks.last ? " end" : "" %>">
+        <h4 class="block-date">
+          <%= format_time(block.start_time, block.time_zone, :date_only) %>
+        </h4>
+        <div class="block-start time">
+          <%= format_time(block.start_time, block.time_zone, :time_only) %>
+        </div>
+        <p>to</p>
+        <div class="block-end time">
+          <%= format_time(block.end_time, block.time_zone, :time_only) %>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  <% end %>
+</div>
 <% end %>
 
 <%= render partial: 'blocks/form' %>
 
-<h3>Generate Schedule</h3>
-<% if slots_left_to_create > 0 %>
-  <p>
-    You have not created enough available blocks. Add more blocks to generate a schedule.
-  </p>
-<% else %>
-  <p>
-    You have enough blocks open to generate a schedule for this group.
-  </p>
-<% end %>
-<%= form_tag event_schedules_path(@event) do %>
-  <%= label_tag "Schedule Generation Options" %>
-  <%= radio_button_tag :randomization_option, 'random', true %>
-  <%= radio_button_tag :randomization_option, 'order', false %>
 
-  <%= submit_tag "Generate Schedule", class: 'button' %>
-<% end %>
-<%= render partial: 'application/errors', object: @schedule_errors %>
+
+<div class="row">
+  <div class="columns small-12 medium-6 medium-centered">
+    <div class="callout <%= slots_left_to_create > 0 ? "secondary" : "success" %>">
+      <h3>Generate Schedule</h3>
+      <% if slots_left_to_create > 0 %>
+        <p>
+          You have not created enough available blocks. Add more blocks to generate a schedule.
+        </p>
+      <% else %>
+        <p>
+          You have enough blocks open to generate a schedule for this group.
+        </p>
+      <% end %>
+      <%= form_tag event_schedules_path(@event) do %>
+        <div class="row">
+          <div class="columns text-center">
+            <%= submit_tag "Generate Schedule", class: 'button', disabled: (slots_left_to_create > 0) %>
+          </div>
+        </div>
+      <% end %>
+      <%= render partial: 'application/errors', object: @schedule_errors %>
+    </div>
+  </div>
+</div>
