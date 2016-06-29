@@ -33,7 +33,9 @@ $(function() {
   });
 
   var reformatDate = function(currentTime, $input){
-    currentTime = moment(currentTime).format('YYYY-MM-DD HH:mm:ss')
+    dateFromInput = $("#block-date-picker").val();
+    timeFromInput = $input.val();
+    currentTime = moment(dateFromInput + " " + timeFromInput).format('YYYY-MM-DD HH:mm:ss')
 
     if($input.attr('id') == 'start_time_visual'){
       $('#block_start_time').val(currentTime);
@@ -42,11 +44,18 @@ $(function() {
     }
   };
 
+  $('#block-date-picker').datetimepicker({
+    format: 'M/D/YYYY',
+    startDate: Date.now(),
+    timepicker:false
+  })
+
   $('.date-time-picker').datetimepicker({
-    format: 'M/D/YYYY h:mm a',
+    format: 'h:mm a',
     formatTime: 'h:mm a',
     formatDate: 'M/D/YYYY',
     startDate: Date.now(),
-    onClose: reformatDate
+    onClose: reformatDate,
+    datepicker: false
   });
 });
