@@ -5,4 +5,12 @@ class Group < ActiveRecord::Base
 
   validates :name, presence: true
   validates :last_used, timeliness: :on, allow_blank: true, allow_nil: true
+
+  def self.all_for_user(user)
+    Group.where(user: user)
+  end
+
+  def self.find_for_user(id, user)
+    Group.where(id: id, user: user).first
+  end
 end

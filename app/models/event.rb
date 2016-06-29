@@ -12,6 +12,14 @@ class Event < ActiveRecord::Base
             presence: true,
             numericality: { only_integer: true, greater_than: 0 }
 
+  def self.all_for_user(user)
+    Event.where(user: user)
+  end
+
+  def self.find_for_user(id, user)
+    Event.where(id: id, user: user).first
+  end
+
   def slots
     slots = []
     blocks.each do |block|

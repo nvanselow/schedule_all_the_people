@@ -91,6 +91,11 @@ RSpec.configure do |config|
 =end
 end
 
+def check_auth_error
+  expect(page).to have_content("Please login to visit that page.")
+  expect(current_path).to eq(root_path)
+end
+
 def valid_start_dates
   ['2016-01-22 11:00', '2014-12-11 05:00', '2015-03-11 18:00', '2015-11-05 8:00am']
 end

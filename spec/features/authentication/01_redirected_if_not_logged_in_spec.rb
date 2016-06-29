@@ -53,8 +53,3 @@ feature "can't visit auth protected pages if not logged in" do
     check_auth_error
   end
 end
-
-def check_auth_error
-  expect(page).to have_content("Please login to visit that page.")
-  expect(current_path).to eq(root_path)
-end

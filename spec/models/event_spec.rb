@@ -18,6 +18,47 @@ describe Event, type: :model do
     it { should have_many(:blocks).dependent(:destroy) }
   end
 
+  describe "#all_for_user" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:events) { FactoryGirl.create_list(:event, 3, user: user) }
+
+    it "returns all events for a user" do
+      test_events = Event.all_for_user(user)
+
+      expect(test_events.size).to eq(3)
+      events.each do |event|
+        expect(test_events).to include(event)
+      end
+    end
+
+    it "returns an empty array if no events for user" do
+      another_user = FactoryGirl.create(:user)
+
+      test_events = Event.all_for_user(another_user)
+
+      expect(test_events.size).to eq(0)
+    end
+  end
+
+  describe ".find_for_user" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:event) { FactoryGirl.create(:event, user: user) }
+
+    it "returns an event belonging to a user" do
+      test_event = Event.find_for_user(event.id, user)
+
+      expect(test_event).to eq(event)
+    end
+
+    it "returns nil if event does not belong to user" do
+      another_user = FactoryGirl.create(:user)
+
+      test_event = Event.find_for_user(event.id, another_user)
+
+      expect(test_event).to eq(nil)
+    end
+  end
+
   describe "#slots" do
     it "returns all of the slots across all blocks for an event" do
       event = FactoryGirl.create(:event)
