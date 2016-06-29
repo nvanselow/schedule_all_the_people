@@ -11,11 +11,12 @@
 
     <%= form_for [@event, @block] do |f| %>
       <%= f.label :start_time, "Start Time" %>
-      <%= f.datetime_field :start_time, step: @event.slot_duration %>
+      <%= text_field_tag :start_time_visual, nil, step: @event.slot_duration, class: "date-time-picker" %>
+      <%= f.text_field :start_time, type: 'hidden' %>
 
       <%= f.label :end_time, "End Time" %>
-      <%= f.datetime_field :end_time, step: @event.slot_duration %>
-
+      <%= text_field_tag :end_time_visual, nil, step: @event.slot_duration, class: "date-time-picker" %>
+      <%= f.text_field :end_time, type: 'hidden' %>
       <%= time_zone_select(:block, :time_zone, ActiveSupport::TimeZone.us_zones, default: 'Eastern Time (US & Canada)') %>
 
       <%= f.submit "Add Block", class: "button" %>

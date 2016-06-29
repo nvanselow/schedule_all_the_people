@@ -38,6 +38,7 @@ class BlocksController < ApplicationController
 
     params[:block][:start_time] = set_timezone(params[:block][:start_time], time_zone)
     params[:block][:end_time] = set_timezone(params[:block][:end_time], time_zone)
+
     params.require(:block).permit(:start_time, :end_time)
   end
 

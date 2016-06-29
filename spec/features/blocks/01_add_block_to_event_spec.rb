@@ -13,8 +13,11 @@ feature "add blocks to an event" do
   scenario "user correctly adds a block" do
     visit event_path(event)
 
-    fill_in("Start Time", with: block[:start_time])
-    fill_in("End Time", with: block[:end_time])
+    # due to a new javascript entry form, need to modify the invisible fields directly
+    find("input#block_start_time", visible: false).set(block[:start_time])
+    find('input#block_end_time', visible: false).set(block[:end_time])
+    # fill_in("block_start_time", with: block[:start_time])
+    # fill_in("End Time", with: block[:end_time])
     click_button("Add Block")
 
     expect(page).to have_content("Block Added")

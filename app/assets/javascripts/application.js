@@ -13,6 +13,40 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require moment.min.js
+//= require datetimepicker.min.js
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+$(function() {
+  $.datetimepicker.setLocale('en');
+  $.datetimepicker.setDateFormatter({
+    parseDate: function (date, format) {
+        var d = moment(date, format);
+        return d.isValid() ? d.toDate() : false;
+    },
+
+    formatDate: function (date, format) {
+        return moment(date).format(format);
+    }
+  });
+
+  var reformatDate = function(currentTime, $input){
+    currentTime = moment(currentTime).format('YYYY-MM-DD HH:mm:ss')
+
+    if($input.attr('id') == 'start_time_visual'){
+      $('#block_start_time').val(currentTime);
+    } else {
+      $('#block_end_time').val(currentTime);
+    }
+  };
+
+  $('.date-time-picker').datetimepicker({
+    format: 'M/D/YYYY h:mm a',
+    formatTime: 'h:mm a',
+    formatDate: 'M/D/YYYY',
+    startDate: Date.now(),
+    onClose: reformatDate
+  });
+});
