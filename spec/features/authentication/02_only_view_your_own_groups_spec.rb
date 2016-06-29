@@ -15,7 +15,7 @@ feature "only view your own groups" do
     expect(page).not_to have_content(group.name)
   end
 
-  visit "attempts to view group details" do
+  scenario "attempts to view group details" do
     visit group_path(group)
 
     expect(page).not_to have_content(group.name)

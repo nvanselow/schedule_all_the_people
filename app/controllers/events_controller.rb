@@ -10,14 +10,19 @@ class EventsController < ApplicationController
   before_filter :authorize
 
   def index
-    @events = Event.all
+    @events = Event.all_for_user(current_user)
   end
 
   def show
-    @event = Event.find(params[:id])
-    @group = @event.group
-    @blocks = blocks
-    @block = Block.new
+    @event = Event.find_for_user(params[:id], current_user)
+    if(@event)
+      @group = @event.group
+      @blocks = blocks
+      @block = Block.new
+    else
+      flash[:alert] = "That is not your event!"
+      redirect_to root_path
+    end
   end
 
   def new
@@ -44,13 +49,13 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
+    @event = Event.find_for_user(params[:id], current_user)
     @groups = get_groups
     @calendars = get_calendars
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = Event.find_for_user(params[:id], current_user)
 
     if(@event.update(event_params))
       flash[:success] = "Event updated!"
@@ -66,7 +71,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    Event.destroy(params[:id])
+    Event.find_for_user(params[:id], current_user).destroy
     flash[:success] = "Event deleted"
     redirect_to events_path
   end
@@ -86,7 +91,7 @@ class EventsController < ApplicationController
   end
 
   def get_groups
-    Group.all.collect { |group| [group.name, group.id] }
+    Group.all_for_user(current_user).collect { |group| [group.name, group.id] }
   end
 
   def blocks

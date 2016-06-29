@@ -5,7 +5,7 @@ class BlocksController < ApplicationController
   before_filter :authorize
 
   def create
-    @event = Event.find(params[:event_id])
+    @event = Event.find_for_user(params[:event_id], current_user)
     @block = @event.blocks.new(block_params)
 
     if(@block.save)
@@ -24,7 +24,7 @@ class BlocksController < ApplicationController
     Block.destroy(params[:id])
     flash[:success] = "Block deleted"
 
-    @event = Event.find(params[:event_id])
+    @event = Event.find_for_user(params[:event_id], current_user)
     @group = @event.group
     @blocks = @event.blocks
     @block = Block.new

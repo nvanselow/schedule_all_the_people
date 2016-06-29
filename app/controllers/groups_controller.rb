@@ -2,13 +2,18 @@ class GroupsController < ApplicationController
   before_filter :authorize
 
   def index
-    @groups = Group.all
+    @groups = Group.all_for_user(current_user)
   end
 
   def show
-    @group = Group.find(params[:id])
-    @people = @group.people
-    @person = Person.new
+    @group = Group.find_for_user(params[:id], current_user)
+    if(@group)
+      @people = @group.people
+      @person = Person.new
+    else
+      flash[:alert] = "That is not your group!"
+      redirect_to root_path
+    end
   end
 
   def new
@@ -48,7 +53,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    Group.destroy(params[:id])
+    Group.find_for_user(params[:id], current_user).destroy
     flash[:success] = "Group deleted!"
     redirect_to groups_path
   end

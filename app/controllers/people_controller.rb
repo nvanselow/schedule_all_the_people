@@ -1,8 +1,8 @@
 class PeopleController < ApplicationController
   before_filter :authorize
-  
+
   def create
-    @group = Group.find(params[:group_id])
+    @group = Group.find_for_user(params[:group_id], current_user)
     if(params[:email_list])
       create_from_list
     else

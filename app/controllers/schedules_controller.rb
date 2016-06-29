@@ -7,7 +7,7 @@ class SchedulesController < ApplicationController
   before_filter :authorize
 
   def create
-    @event = Event.find(params[:event_id])
+    @event = Event.find_for_user(params[:event_id], current_user)
 
     scheduler = Scheduler.new(@event)
 
