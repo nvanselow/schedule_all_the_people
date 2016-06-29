@@ -41,6 +41,28 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    @event = Event.find(params[:id])
+    @groups = get_groups
+    @calendars = get_calendars
+  end
+
+  def update
+    @event = Event.find(params[:id])
+
+    if(@event.update(event_params))
+      flash[:success] = "Event updated!"
+      redirect_to event_path(@event)
+    else
+      @groups = get_groups
+      @calendars = get_calendars
+
+      flash[:alert] = "There was a problem updating the event."
+      @errors = @event.errors.full_messages
+      render 'events/edit'
+    end
+  end
+
   def destroy
     Event.destroy(params[:id])
     flash[:success] = "Event deleted"
@@ -51,7 +73,7 @@ class EventsController < ApplicationController
 
   def event_params
     split_calendar_id
-    params.require(:event).permit(:name, :group_id, :slot_duration, :calendar_id, :calendar_name)
+    params.require(:event).permit(:name, :location, :group_id, :slot_duration, :calendar_id, :calendar_name)
   end
 
   def split_calendar_id

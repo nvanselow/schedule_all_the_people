@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :groups, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :people, only: [:create, :destroy]
   end
-  resources :events, only: [:index, :show, :new, :create, :destroy] do
+  resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :blocks, only: [:create, :destroy]
     resources :schedules, only: [:create]
     resources :google_calendars, only: [:create]

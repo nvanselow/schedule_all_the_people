@@ -1,6 +1,8 @@
 <h2><%= @event.name %></h2>
 <h4>Group: <%= @group.name %></h4>
+<h4>Calendar: <%= @event.calendar_name %></h4>
 <h4>Slot Duration: <%= @event.slot_duration %> min</h4>
+<h4>Location: <%= @event.location %></h4>
 <p>
   Each available slot within each block will be <%= @event.slot_duration %> min long
 </p>
