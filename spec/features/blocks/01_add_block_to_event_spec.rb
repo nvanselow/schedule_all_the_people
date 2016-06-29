@@ -15,8 +15,8 @@ feature "add blocks to an event" do
 
     expect(page).to have_content("Block Added")
     expect(page).to have_css('.block')
-    expect(page).to have_content(block[:start_time])
-    expect(page).to have_content(block[:end_time])
+    expect(page).to have_content(DateTime.parse(block[:start_time]).month)
+    expect(page).to have_content(DateTime.parse(block[:start_time]).day)
   end
 
   scenario "user attempts to add an invalid block" do

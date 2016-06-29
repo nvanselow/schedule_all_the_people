@@ -1,6 +1,9 @@
 require_relative '../../lib/modules/google_calendar'
 
 class EventsController < ApplicationController
+  cattr_accessor :GoogleCalendar
+  @@GoogleCalendar = GoogleCalendar
+
   include SlotsLeft
   helper_method :slots_left_to_create
 
@@ -18,7 +21,6 @@ class EventsController < ApplicationController
   end
 
   def create
-    binding.pry
     @event = Event.new(event_params)
     @event.user = current_user
 
@@ -27,6 +29,8 @@ class EventsController < ApplicationController
       redirect_to event_path(@event)
     else
       @groups = get_groups
+      @calendars = get_calendars
+      
       flash[:alert] = "There was a problem creating that event."
       @errors = @event.errors.full_messages
       render 'events/new'
@@ -56,7 +60,7 @@ class EventsController < ApplicationController
   end
 
   def get_calendars
-    calendar_service = GoogleCalendar.new(current_user)
+    calendar_service = @@GoogleCalendar.new(current_user)
     calendars = calendar_service.get_calendars
     calendars.map! do |calendar|
       [calendar.name, "#{calendar.id}::#{calendar.name}"]

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     resources :people, only: [:create, :destroy]
   end
   resources :events, only: [:show, :new, :create] do
-    resources :blocks, only: [:create]
+    resources :blocks, only: [:create, :destroy]
     resources :schedules, only: [:create]
     resources :google_calendars, only: [:create]
   end

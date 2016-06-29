@@ -18,6 +18,17 @@ class BlocksController < ApplicationController
     end
   end
 
+  def destroy
+    Block.destroy(params[:id])
+    flash[:success] = "Block deleted"
+
+    @event = Event.find(params[:event_id])
+    @group = @event.group
+    @blocks = @event.blocks
+    @block = Block.new
+    render 'events/show'
+  end
+
   private
 
   def block_params

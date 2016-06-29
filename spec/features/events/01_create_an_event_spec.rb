@@ -7,6 +7,7 @@ feature "create an event" do
   let(:event) { FactoryGirl.attributes_for(:event, group: group, user: user) }
 
   before do
+    EventsController.GoogleCalendar = FakeGoogleCalendar
     sign_in_as(user)
   end
 

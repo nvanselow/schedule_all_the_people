@@ -33,6 +33,13 @@
         <div class="block-end time">
           <%= format_time(block.end_time, block.time_zone, :time_only) %>
         </div>
+        <div class="text-center">
+          <%= button_to "Delete",
+              event_block_path(@event, block),
+              method: "delete",
+              id: "delete_#{block.id}",
+              class: "button alert delete-button" %>
+        </div>
       </div>
     <% end %>
   <% end %>
