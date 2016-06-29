@@ -48,6 +48,7 @@ class GroupsController < ApplicationController
 
   def destroy
     Group.destroy(params[:id])
+    flash[:success] = "Group deleted!"
     redirect_to groups_path
   end
 

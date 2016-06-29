@@ -7,6 +7,10 @@ class EventsController < ApplicationController
   include SlotsLeft
   helper_method :slots_left_to_create
 
+  def index
+    @events = Event.all
+  end
+
   def show
     @event = Event.find(params[:id])
     @group = @event.group
@@ -30,11 +34,17 @@ class EventsController < ApplicationController
     else
       @groups = get_groups
       @calendars = get_calendars
-      
+
       flash[:alert] = "There was a problem creating that event."
       @errors = @event.errors.full_messages
       render 'events/new'
     end
+  end
+
+  def destroy
+    Event.destroy(params[:id])
+    flash[:success] = "Event deleted"
+    redirect_to events_path
   end
 
   private

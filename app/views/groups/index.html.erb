@@ -11,6 +11,11 @@
       <% else %>
         (No people in this group)
       <% end %>
+      <%= button_to "Delete",
+          group_path(group),
+          method: "delete",
+          id: "delete_#{group.id}",
+          class: "button alert small" %>
     </li>
   <% end %>
 </ul>

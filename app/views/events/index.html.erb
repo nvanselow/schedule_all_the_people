@@ -1,0 +1,14 @@
+<h2>Events</h2>
+
+<ul>
+  <% @events.each do |event| %>
+    <li>
+      <%= link_to event.name, event_path(event) %>
+      <%= button_to "Delete",
+          event_path(event),
+          method: 'delete',
+          id: "delete_#{event.id}",
+          class: 'button alert' %>
+    </li>
+  <% end %>
+</ul>
