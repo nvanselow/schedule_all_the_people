@@ -2,7 +2,12 @@ require 'rails_helper'
 
 feature "view groups of people to schedule" do
 
-  let!(:groups) { FactoryGirl.create_list(:group, 3) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:groups) { FactoryGirl.create_list(:group, 3, user: user) }
+
+  before do
+    sign_in_as user
+  end
 
   scenario "visit the list of current groups" do
     visit groups_path

@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 feature "edit a group" do
-  let!(:group) { FactoryGirl.create(:group) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:group) { FactoryGirl.create(:group, user: user) }
   let(:updated_name) { "Group Updated Name" }
 
   before do
+    sign_in_as user
     visit edit_group_path(group.id)
   end
 

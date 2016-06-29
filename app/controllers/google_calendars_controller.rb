@@ -4,6 +4,8 @@ require_relative '../../lib/modules/google_client'
 class GoogleCalendarsController < ApplicationController
   include ActiveSupport::Rescuable
 
+  before_filter :authorize
+
   rescue_from Google::Apis::AuthorizationError, :with => :handle_authorization_error
 
   def index

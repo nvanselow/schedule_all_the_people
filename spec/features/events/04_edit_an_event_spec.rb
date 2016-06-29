@@ -4,6 +4,10 @@ feature "edit an event" do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:event) { FactoryGirl.create(:event, user: user) }
 
+  before do
+    sign_in_as user
+  end
+
   scenario "user visits the edit form" do
     visit events_path(event)
 

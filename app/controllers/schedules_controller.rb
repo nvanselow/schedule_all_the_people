@@ -4,6 +4,8 @@ class SchedulesController < ApplicationController
   include SlotsLeft
   helper_method :slots_left_to_create
 
+  before_filter :authorize
+
   def create
     @event = Event.find(params[:event_id])
 

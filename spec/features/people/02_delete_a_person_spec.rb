@@ -2,9 +2,14 @@ require 'rails_helper'
 
 feature "delete a person from a group" do
 
-  let!(:group) { FactoryGirl.create(:group) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:group) { FactoryGirl.create(:group, user: user) }
   let!(:members) { FactoryGirl.create_list(:member, 3, group: group) }
 
+  before do
+    sign_in_as user
+  end
+  
   scenario "user deletes a person from a group" do
     visit group_path(group)
 

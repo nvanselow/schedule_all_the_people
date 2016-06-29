@@ -8,6 +8,10 @@ feature "generate a schedule" do
   let!(:event) { FactoryGirl.create(:event, group: group, user: user, slot_duration: slot_duration) }
   let(:start_time) { DateTime.new(2016, 1, 1, 11, 0, 0) }
 
+  before do
+    sign_in_as user
+  end
+
   scenario "there are not enough block/slots created" do
     num_people = 5
     num_slots = 4

@@ -7,6 +7,8 @@ class EventsController < ApplicationController
   include SlotsLeft
   helper_method :slots_left_to_create
 
+  before_filter :authorize
+
   def index
     @events = Event.all
   end

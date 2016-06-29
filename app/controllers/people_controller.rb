@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+  before_filter :authorize
   
   def create
     @group = Group.find(params[:group_id])

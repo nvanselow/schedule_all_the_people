@@ -7,6 +7,10 @@ feature "add a list of emails/people to a group" do
   let(:test_email) { "test@email.com" }
   let(:email_list) { "#{test_email}, another_email@email.com, abc@whatevs.com" }
 
+  before do
+    sign_in_as user
+  end
+
   scenario "user adds a valid list of emails" do
     visit group_path(group)
 

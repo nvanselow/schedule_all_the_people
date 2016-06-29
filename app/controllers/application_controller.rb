@@ -5,4 +5,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :format_time
+
+  def authorize
+    if(!current_user)
+      flash[:alert] = "Please login to visit that page."
+      redirect_to root_path
+    end
+  end
 end

@@ -2,7 +2,12 @@ require 'rails_helper'
 
 feature "view details for a group" do
 
-  let!(:group) { FactoryGirl.create(:group) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:group) { FactoryGirl.create(:group, user: user) }
+
+  before do
+    sign_in_as user
+  end
 
   scenario "visit the details page" do
     visit group_path(group.id)

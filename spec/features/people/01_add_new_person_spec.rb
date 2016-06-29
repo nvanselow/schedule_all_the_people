@@ -2,10 +2,12 @@ require 'rails_helper'
 
 feature "add people to a group" do
 
-  let!(:group) { FactoryGirl.create(:group) }
+  let!(:user) { FactoryGirl.create(:user) }
+  let!(:group) { FactoryGirl.create(:group, user: user) }
   let(:valid_person) { FactoryGirl.attributes_for(:person) }
 
   before do
+    sign_in_as user
     visit group_path(group)
   end
 

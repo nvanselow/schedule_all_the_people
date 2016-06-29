@@ -5,6 +5,10 @@ feature "delete an event" do
   let!(:user) { FactoryGirl.create(:user) }
   let!(:event) { FactoryGirl.create(:event, user: user) }
 
+  before do
+    sign_in_as user
+  end
+
   scenario "user clicks the delete button" do
     visit events_path
 

@@ -6,6 +6,10 @@ feature "add blocks to an event" do
   let!(:event) { FactoryGirl.create(:event, user: user) }
   let(:block) { FactoryGirl.attributes_for(:block) }
 
+  before do
+    sign_in_as user
+  end
+
   scenario "user correctly adds a block" do
     visit event_path(event)
 

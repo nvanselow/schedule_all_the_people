@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 feature "create a new group" do
+  let(:user) { FactoryGirl.create(:user) }
   let(:group_name) { "Test Group" }
 
   before do
+    sign_in_as user
     visit new_group_path
   end
 
