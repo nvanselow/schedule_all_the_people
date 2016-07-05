@@ -1,6 +1,3 @@
-# require 'google/apis/people_v1'
-require 'modules/google_client'
-
 class SessionsController < ApplicationController
   include ApplicationHelper
   include GoogleClient

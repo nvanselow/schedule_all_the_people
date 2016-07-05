@@ -1,5 +1,3 @@
-require_relative '../../lib/modules/scheduler'
-
 class SchedulesController < ApplicationController
   include SlotsLeft
   helper_method :slots_left_to_create

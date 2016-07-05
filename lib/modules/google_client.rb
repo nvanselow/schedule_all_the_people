@@ -1,6 +1,6 @@
 require 'signet/oauth_2/client'
 
-module GoogleClient
+module Modules::GoogleClient
   def self.redirect_uri
     ENV['GOOGLE_REDIRECT_URI']
   end

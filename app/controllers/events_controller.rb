@@ -1,8 +1,6 @@
-require_relative '../../lib/modules/google_calendar'
-
 class EventsController < ApplicationController
   cattr_accessor :GoogleCalendar
-  @@GoogleCalendar = GoogleCalendar
+  @@GoogleCalendar = Modules::GoogleCalendar
 
   include SlotsLeft
   helper_method :slots_left_to_create

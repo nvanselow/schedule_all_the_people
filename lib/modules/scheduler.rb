@@ -1,4 +1,4 @@
-class Scheduler
+class Modules::Scheduler
   attr_reader :unscheduled_slots, :unscheduled_people, :errors
   def initialize(event)
     @event = event

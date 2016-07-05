@@ -1,8 +1,8 @@
 require 'google/apis/calendar_v3'
 require_relative 'google_client'
 
-class GoogleCalendar
-  include GoogleClient
+class Modules::GoogleCalendar
+  include Modules::GoogleClient
 
   PROVIDER = 'google_oauth2'
   SimpleCalendar = Struct.new(:id, :name, :time_zone)

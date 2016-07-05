@@ -1,12 +1,5 @@
-require_relative '../../lib/modules/google_calendar'
-require_relative '../../lib/modules/google_client'
-
 class GoogleCalendarsController < ApplicationController
-  include ActiveSupport::Rescuable
-
   before_filter :authorize
-
-  rescue_from Google::Apis::AuthorizationError, :with => :handle_authorization_error
 
   def index
     calendar_service = GoogleCalendar.new(current_user)
@@ -24,9 +17,4 @@ class GoogleCalendarsController < ApplicationController
     render 'show'
   end
 
-  private
-
-  def handle_authorization_error
-    redirect_to '/auth/google_oauth2'
-  end
 end
