@@ -7,7 +7,7 @@ class SchedulesController < ApplicationController
   def create
     @event = Event.find_for_user(params[:event_id], current_user)
 
-    scheduler = Scheduler.new(@event)
+    scheduler = Modules::Scheduler.new(@event)
 
     if(scheduler.run)
       flash[:success] = "Schedule was generated!"

@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   include ApplicationHelper
-  include GoogleClient
+  include Modules::GoogleClient
 
   def create
     @user = User.find_or_create_from_omniauth(request.env['omniauth.auth'])
