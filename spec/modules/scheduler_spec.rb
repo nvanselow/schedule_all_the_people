@@ -1,14 +1,14 @@
 require "rails_helper"
 require_relative '../../lib/modules/scheduler'
 
-describe Scheduler, type: :model do
+describe Modules::Scheduler, type: :model do
 
   describe ".new" do
     let(:event) { FactoryGirl.create(:event) }
     let(:scheduler) { Scheduler.new(event) }
 
     it "accepts an event as an argument" do
-      expect { Scheduler.new(event) }.not_to raise_error
+      expect { Modules::Scheduler.new(event) }.not_to raise_error
     end
 
     it "has a reader for unscheduled slots" do
@@ -29,7 +29,7 @@ describe Scheduler, type: :model do
     let(:number_of_slots) { 6 }
     let(:number_of_people) { 6 }
     let(:event) { FactoryGirl.create(:event) }
-    let(:scheduler) { Scheduler.new(event) }
+    let(:scheduler) { Modules::Scheduler.new(event) }
 
     it "returns true if everyone is scheduled" do
       add_blocks(event)
