@@ -15,8 +15,12 @@ Rails.application.routes.draw do
   end
   resources :events, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     resources :blocks, only: [:create, :destroy]
-    resources :schedules, only: [:create]
+    resources :schedules, only: [:index, :create]
     resources :google_calendars, only: [:create]
+  end
+
+  namespace :api do
+    resources :scheduled_spots, only: [:create]
   end
 
   resources :google_calendars, only: [:index]

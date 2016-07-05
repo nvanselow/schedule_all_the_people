@@ -4,6 +4,13 @@ class SchedulesController < ApplicationController
 
   before_filter :authorize
 
+  def index
+    @event = Event.find_for_user(params[:event_id], current_user)
+    @blocks = @event.blocks
+
+    render 'schedules/show'
+  end
+
   def create
     @event = Event.find_for_user(params[:event_id], current_user)
 
@@ -13,7 +20,7 @@ class SchedulesController < ApplicationController
       flash[:success] = "Schedule was generated!"
       @blocks = @event.blocks
       @schedule_errors = scheduler.errors
-      render 'schedules/show'
+      redirect_to event_schedules_path(@event)
     else
       flash[:alert] = "There were some problems generating your schedule. Please fix and then try generating again."
       @schedule_errors = scheduler.errors

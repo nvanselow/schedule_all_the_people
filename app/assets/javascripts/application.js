@@ -60,3 +60,44 @@ $(function() {
     datepicker: false
   });
 });
+
+var updateSlot = function(person_id, new_slot_id, old_slot_id){
+  return $.ajax({
+    method: 'POST',
+    url: '/api/scheduled_spots',
+    data: {
+      slot: {
+        new_slot_id: new_slot_id,
+        old_slot_id: old_slot_id,
+        person_id: person_id
+      }
+    }
+  });
+};
+
+$(function(){
+  $( ".slot" ).droppable({
+    accept: ".person",
+    drop: handleDropEvent
+  });
+
+  $( ".person" ).draggable({
+    containment: ".blocks",
+    cursor: "move",
+    revert: true
+  });
+
+  function handleDropEvent( event, ui ) {
+    var droppable = $(this);
+    var new_slot_id = $(this).data('id')
+    var draggable = ui.draggable;
+    var person_id = draggable.data("id");
+    var old_slot_id = draggable.data("current-slot-id")
+    draggable.draggable( 'option', 'revert', false);
+
+    updateSlot(person_id, new_slot_id, old_slot_id)
+      .success(function(data){
+        draggable.position( { of: droppable, my: 'left top', at: 'left top' } );
+      });
+  }
+});
