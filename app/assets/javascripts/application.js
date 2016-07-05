@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require jquery-ui.min.js
 //= require moment.min.js
 //= require datetimepicker.min.js
 //= require_tree .
