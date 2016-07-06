@@ -15,5 +15,7 @@ feature "handles google oauth token expiration" do
     visit new_event_path
 
     expect(current_path).to eq("/")
+
+    FakeGoogleCalendar.turn_off_auth_errors
   end
 end
