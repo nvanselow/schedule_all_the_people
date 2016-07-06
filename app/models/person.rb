@@ -1,5 +1,3 @@
-require_relative '../../lib/modules/email_list'
-
 class Person < ActiveRecord::Base
   has_many :members
   has_many :groups, through: :members
@@ -24,7 +22,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.create_from_list(email_list, group = nil)
-    emails = EmailList.parse(email_list)
+    emails = Modules::EmailList.parse(email_list)
 
     if(emails.size > 90)
       nil
