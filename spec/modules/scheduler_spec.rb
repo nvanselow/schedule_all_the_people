@@ -5,7 +5,7 @@ describe Modules::Scheduler, type: :model do
 
   describe ".new" do
     let(:event) { FactoryGirl.create(:event) }
-    let(:scheduler) { Scheduler.new(event) }
+    let(:scheduler) { Modules::Scheduler.new(event) }
 
     it "accepts an event as an argument" do
       expect { Modules::Scheduler.new(event) }.not_to raise_error
