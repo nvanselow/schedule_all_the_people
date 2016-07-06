@@ -70,34 +70,6 @@ describe Event, type: :model do
       expect(slots.size).to eq(15)
     end
   end
-
-  # describe "#slots_by_most_restricted" do
-  #   it "returns all slots ordered by those that are most restricted by people" do
-  #     event = FactoryGirl.create(:event)
-  #     block = FactoryGirl.create(:block, event: event)
-  #     test_slots = create_slots_of_varying_restrictions(block)
-  #
-  #     slots = event.slots_by_most_restricted
-  #
-  #     expect(slots[0].id).to eq(test_slots[:most_restricted_slot].id)
-  #     expect(slots[1].id).to eq(test_slots[:middle_restricted_slot].id)
-  #     expect(slots[2].id).to eq(test_slots[:least_restricted_slot].id)
-  #   end
-  #
-  #   it "accounts for all slots across blocks" do
-  #
-  #   end
-  # end
-
-  xdescribe "#schedule!" do
-    it "schedules all the people to available slots" do
-      group = FactoryGirl.create(:group)
-      group.people << FactoryGirl.create_list(:person, 5)
-      event = FactoryGirl.create(:event, group: group)
-
-      event.schedule!
-    end
-  end
 end
 
 def create_slots_of_varying_restrictions(block)

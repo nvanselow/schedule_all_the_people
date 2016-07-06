@@ -84,41 +84,6 @@ describe Modules::Scheduler, type: :model do
 
       expect(scheduler.errors[0]).to eq("There are too few slots available. Either reduce the number of people or add more blocks.")
     end
-
-    xit "returns a schedule with errors if someone cannot be scheduled due to restrictions" do
-      add_blocks(event)
-      event.group.people << FactoryGirl.create_list(:person, number_of_people - 1)
-
-      very_busy_person = FactoryGirl.create(:person)
-      event.slots.each { |slot| very_busy_person.add_restriction(slot) }
-      event.group.people << very_busy_person
-
-      expect(scheduler.run).to be(false)
-      expect(scheduler.errors.size).to be > 0
-      expect(scheduler.errors).to include("Some people could not be scheduled.")
-    end
-
-    xit "does not schedule people for slots they have identifed as restricted" do
-      slots = add_blocks(event)
-
-      busy_person = FactoryGirl.create(:person)
-      slots.each { |slot| busy_person.add_restriction(slot) }
-      busy_person.remove_restriction(slots[3])
-
-      another_busy_person = FactoryGirl.create(:person)
-      slots.each { |slot| another_busy_person.add_restriction(slot) }
-      busy_person.remove_restriction(slots[2])
-      busy_person.remove_restriction(slots[4])
-
-      event.group.people << FactoryGirl.create_list(:person, number_of_people - 2)
-      event.group.people << [busy_person, another_busy_person]
-
-      expect(scheduler.run).to eq(true)
-    end
-
-    xit "finds a solution even if a few people have restrictions" do
-
-    end
   end
 end
 
