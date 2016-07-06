@@ -7,6 +7,7 @@ feature "generate a schedule" do
   let!(:group) { FactoryGirl.create(:group, user: user) }
   let!(:event) { FactoryGirl.create(:event, group: group, user: user, slot_duration: slot_duration) }
   let(:start_time) { DateTime.new(2016, 1, 1, 11, 0, 0) }
+  let(:block_formatted_date) { '1/1/16' }
 
   before do
     sign_in_as user
@@ -50,7 +51,7 @@ feature "generate a schedule" do
 
     expect(page).to have_content("Schedule")
     expect(page).to have_content(event.name)
-    expect(page).to have_content(block.start_time)
+    expect(page).to have_content(block_formatted_date)
     members.each do |member|
       expect(page).to have_content(member.person.email)
     end
@@ -70,7 +71,8 @@ feature "generate a schedule" do
 
     expect(page).to have_content("Schedule")
     expect(page).to have_content(event.name)
-    expect(page).to have_content(block.start_time)
+    expect(page).to have_content(block_formatted_date)
+    expect(page).to have_content('6:00 AM')
     members.each do |member|
       expect(page).to have_content(member.person.email, count: 1)
     end

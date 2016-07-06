@@ -14,7 +14,9 @@ feature "create an event" do
   scenario "go to form from nav bar" do
     visit root_path
 
-    click_link("Create an Event")
+    within('nav') do
+      click_link("Create an Event")
+    end
 
     expect(page).to have_content("Create a New Event")
   end

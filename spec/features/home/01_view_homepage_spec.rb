@@ -23,7 +23,7 @@ feature "view homepage when signed out" do
       expect(page).not_to have_content("Please sign in using your Google account")
       expect(page).to have_content("Events")
       expect(page).to have_content("No events have been created")
-      expect(page).to have_button("Create an Event")
+      expect(page).to have_link("Create an Event")
     end
   end
 
@@ -36,7 +36,7 @@ feature "view homepage when signed out" do
       expect(page).not_to have_content("Please sign in using your Google account")
       expect(page).to have_content("Groups")
       expect(page).to have_content("No groups have been created")
-      expect(page).to have_button("Create a Group")
+      expect(page).to have_link("Create a Group")
     end
   end
 
