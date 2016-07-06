@@ -2,7 +2,7 @@ class GoogleCalendarsController < ApplicationController
   before_filter :authorize
 
   def index
-    calendar_service = GoogleCalendar.new(current_user)
+    calendar_service = Modules::GoogleCalendar.new(current_user)
     calendar_service.get_calendars
   end
 
@@ -10,7 +10,7 @@ class GoogleCalendarsController < ApplicationController
     @event = Event.find(params[:event_id])
     @blocks = @event.blocks
 
-    calendar_service = GoogleCalendar.new(current_user)
+    calendar_service = Modules::GoogleCalendar.new(current_user)
     calendar_service.create_all_for(@event)
 
     flash[:success] = "Invitations have been sent. Check your Gmail calendar for more details."
