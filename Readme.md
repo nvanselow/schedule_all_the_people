@@ -23,7 +23,8 @@ invite to the people who were added.
   that shuts down occasionally)
 2. Log in using your Google Account
 3. Create a Group
-  ![Create a Group](/readme_gifs/add_a_group.gif)
+
+  <img src="/readme_gifs/add_a_group.gif" width="150">
   - You can add individual people via their email
   - Or you can add a list of emails that are separated by commas or semicolons
 4. Create an event
