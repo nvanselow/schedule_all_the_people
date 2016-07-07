@@ -1,6 +1,11 @@
 require "rails_helper"
 
 describe Slot, type: :model do
+
+  before do
+    Slot.destroy_all
+  end
+  
   describe "validations" do
     subject {
         FactoryGirl.build(:slot,

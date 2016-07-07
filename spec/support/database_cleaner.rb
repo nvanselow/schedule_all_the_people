@@ -14,6 +14,6 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    # DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.clean_with(:truncation)
   end
 end

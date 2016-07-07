@@ -1,6 +1,10 @@
 require "rails_helper"
 
 describe ScheduledSpot, type: :model do
+  before do
+    ScheduledSpot.destroy_all
+  end
+
   describe "validations" do
     it { should validate_presence_of(:person) }
     it { should validate_presence_of(:slot) }

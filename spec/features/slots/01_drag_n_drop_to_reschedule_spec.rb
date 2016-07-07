@@ -28,7 +28,7 @@ feature "drag and drop people on slots to reschedule", js: true do
     # AJAX call.
     visit event_schedules_path(event)
 
-    within('#slot_1') do
+    within("#slot_#{block.slots.first.id}") do
       expect(page).not_to have_content(person.email)
     end
 

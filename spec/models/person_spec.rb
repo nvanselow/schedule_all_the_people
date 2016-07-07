@@ -1,6 +1,13 @@
 require "rails_helper"
 
 describe Person, type: :model do
+  before do
+    # Make sure all people are cleared from the database
+    # before these test. Need to hunt down why peoples table
+    # is persisting across tests.
+    Person.destroy_all
+  end
+
   describe "validations" do
     it { should have_valid(:first_name).when("Name", "Another Name", "", nil) }
 
