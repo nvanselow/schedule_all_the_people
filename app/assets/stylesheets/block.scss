@@ -14,3 +14,12 @@ div.block {
   margin-top: 10px;
   margin-bottom: 0;
 }
+
+.block .time {
+  width: 200px;
+}
+
+.block .slot {
+  margin: 2px;
+  border-left: 1px dashed black;
+}

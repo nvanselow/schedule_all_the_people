@@ -19,7 +19,7 @@
         </tr>
         <% block.slots.each do |slot| %>
           <tr>
-            <td><%= format_time(slot.start_time, slot.time_zone, :time_only) %></td>
+            <td class="time"><%= format_time(slot.start_time, slot.time_zone, :time_only) %></td>
             <td class="slot" id="slot_<%= slot.id %>" data-id="<%= slot.id %>">
             <% slot.people.each do |person| %>
               <div class="person" id="person_<%= person.id %>" data-id="<%= person.id %>" data-current-slot-id="<%= slot.id %>">
