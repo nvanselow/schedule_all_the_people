@@ -84,7 +84,8 @@ $(function(){
   $( ".person" ).draggable({
     containment: ".blocks",
     cursor: "move",
-    revert: true
+    revert: true,
+    start: function(){ $(this).draggable('option', 'revert', true); }
   });
 
   function handleDropEvent( event, ui ) {
@@ -98,6 +99,10 @@ $(function(){
     updateSlot(person_id, new_slot_id, old_slot_id)
       .success(function(data){
         draggable.position( { of: droppable, my: 'left top', at: 'left top' } );
+        draggable.data("current-slot-id", new_slot_id);
+      })
+      .error(function(data){
+        draggable.draggable( 'option', 'revert', true);
       });
   }
 });
