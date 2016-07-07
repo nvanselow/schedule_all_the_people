@@ -28,6 +28,8 @@ invite to the people who were added.
   - You can add individual people via their email
   - Or you can add a list of emails that are separated by commas or semicolons
 4. Create an event
+
+<img src="/readme_gifs/create_an_event.gif" width="350">
   - Give a name to your event
   - Choose the group of people you want to schedule for that event
   - Select which Google Calendar you want the events to appear on. You can choose
