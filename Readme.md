@@ -29,12 +29,18 @@ invite to the people who were added.
   - Or you can add a list of emails that are separated by commas or semicolons
 4. Create an event
 
-<img src="/readme_gifs/create_an_event.gif" width="350">
+  - <img src="/readme_gifs/create_an_event.gif" width="350">
   - Give a name to your event
   - Choose the group of people you want to schedule for that event
   - Select which Google Calendar you want the events to appear on. You can choose
   Google Calendar for which you have write access.
   - Choose the duration of the meeting
   - And provide a location for the meetings (e.g., "My Office")
+  - Click the "Create Event" button
 5. Add blocks of open time for the event
-6. Click the ""
+  - <img src="/readme_gifs/create_a_block.gif" width="350" />
+
+6. Click the "Generate Schedule" button
+7. Reschedule people as needed
+  - 
+8. Click "Send Invites" to send out your Google invites and add the meetings to your calendar
