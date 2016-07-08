@@ -16,10 +16,14 @@ div.block {
 }
 
 .block .time {
-  width: 200px;
+  width: 120px;
 }
 
 .block .slot {
   margin: 2px;
   border-left: 1px dashed black;
+}
+
+.slot ul li {
+  list-style: none;
 }

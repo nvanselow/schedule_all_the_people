@@ -10,26 +10,32 @@
 
 <div class="blocks">
   <% @blocks.each do |block| %>
-    <div class="block">
-      <h4>Date: <%= format_time(block.start_time, block.time_zone, :date_only) %></h4>
-      <table>
-        <tr>
-          <th>Time</th>
-          <th>People</th>
-        </tr>
-        <% block.slots.each do |slot| %>
+    <div class="block row">
+      <div class="columns small-12 medium-6 medium-centered">
+        <h4>Date: <%= format_time(block.start_time, block.time_zone, :date_only) %></h4>
+        <table>
           <tr>
-            <td class="time"><%= format_time(slot.start_time, slot.time_zone, :time_only) %></td>
-            <td class="slot" id="slot_<%= slot.id %>" data-id="<%= slot.id %>">
-            <% slot.people.each do |person| %>
-              <div class="person" id="person_<%= person.id %>" data-id="<%= person.id %>" data-current-slot-id="<%= slot.id %>">
-                <%= person.email %>
-              </div>
-            <% end %>
-          </td>
+            <th>Time</th>
+            <th>People</th>
           </tr>
-        <% end %>
-      </table>
+          <% block.slots.each do |slot| %>
+            <tr>
+              <td class="time"><%= format_time(slot.start_time, slot.time_zone, :time_only) %></td>
+              <td class="slot" id="slot_<%= slot.id %>" data-id="<%= slot.id %>">
+                <ul>
+                  <% slot.people.each do |person| %>
+                    <li>
+                      <div class="person" id="person_<%= person.id %>" data-id="<%= person.id %>" data-current-slot-id="<%= slot.id %>">
+                        <%= person.email %>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+            </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
     </div>
   <% end %>
 </div>

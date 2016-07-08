@@ -98,8 +98,16 @@ $(function(){
 
     updateSlot(person_id, new_slot_id, old_slot_id)
       .success(function(data){
-        draggable.position( { of: droppable, my: 'left top', at: 'left top' } );
+        var old_li = draggable.parent();
+        var new_person_li = $('<li>').append(draggable);
+        var target_ul = droppable.find('ul');
+
+        target_ul.append(new_person_li);
+        draggable.position( { of: new_person_li, my: 'left top', at: 'left top' } );
+
         draggable.data("current-slot-id", new_slot_id);
+
+        old_li.remove();
       })
       .error(function(data){
         draggable.draggable( 'option', 'revert', true);
