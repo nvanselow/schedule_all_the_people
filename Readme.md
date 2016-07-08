@@ -43,3 +43,10 @@ invite to the people who were added.
 7. Reschedule people as needed
   - <img src="/readme_gifs/reschedule.gif" width="350" />
 8. Click "Send Invites" to send out your Google invites and add the meetings to your calendar
+
+## Future Improvements
+
+- Be able to view all slots and remove individual slots in a block
+- Allow multiple people to be scheduled in a slot
+- Add additional javascript components (perhaps in React) to reduce page refreshes when adding a block.
+- Send out a unique URL to potential people to ask for conflicts. Take those conflicts in to account when generating a schedule.
